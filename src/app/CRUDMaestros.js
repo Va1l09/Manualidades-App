@@ -1,106 +1,106 @@
 import { deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 import { db } from "./firebase.js";
 
-const RollsRoyces = document.querySelector('.RollsRoyces');
-const FormularioActualizarRollsRoyce = document.querySelector('#Formulario-ActualizarRollsRoyce');
+const Manualidades = document.querySelector('.Manualidades');
+const FormularioActualizarManualidad = document.querySelector('#Formulario-ActualizarManualidad');
 
-const obtenerRollsRoyce = (id) => getDoc(doc(db, 'RollsRoyces', id));
+const obtenerManualidad = (id) => getDoc(doc(db, 'Manualidades', id));
 
 let id = '';
 
-// Nueva función para actualizar RollsRoyce
-const actualizarRollsRoyce = async (id, nuevosValores) => {
+// Nueva función para actualizar manualidad
+const actualizarManualidad = async (id, nuevosValores) => {
     try {
-        await updateDoc(doc(db, 'RollsRoyces', id), nuevosValores);
-        alert('Rolls Royce actualizado correctamente');
+        await updateDoc(doc(db, 'Manualidades', id), nuevosValores);
+        alert('Manualidad actualizada correctamente');
     } catch (error) {
-        alert('Error al actualizar el Rolls Royce', 'error');
+        alert('Error al actualizar la manualidad', 'error');
     }
 };
 
-export const MostrarListaRollsRoyces = (Datos) => {
+export const MostrarListaManualidades = (Datos) => {
     if (Datos.length) {
         let html = '';
         Datos.forEach(documento => {
-            const RollsRoyce = documento.data();
+            const Manualidad = documento.data();
             const idDocumento = documento.id; // Obtén el identificador del documento
             const li = `
                 <li class="list-group-item list-group-item-action">
-                    <h5> Modelo del Rolls Royce: ${RollsRoyce.Modelo} </h5>
-                    <p> Año: ${RollsRoyce.Año} </p>
-                    <p> Color: ${RollsRoyce.Color} </p>
-                    <p> Precio: ${RollsRoyce.Precio} </p>
-                    <p> Fecha de Fabricación: ${RollsRoyce.FechaFabricacion} </p>
-                    <button class="btn btn-outline-warning w-100 mb-2 botoneSinSesion Eliminar-RollsRoyce" data-id="${idDocumento}"> Eliminar </button>
-                    <button class="btn btn-outline-success w-100 mb-2 botoneSinSesion Actualizar-RollsRoyce" data-id="${idDocumento}" data-bs-toggle="modal" data-bs-target="#ActualizarRollsRoyce"> Actualizar </button>
+                    <h5> Nombre de la manualidad: ${Manualidad.Nombre} </h5>
+                    <p> Tipo: ${Manualidad.Tipo} </p>
+                    <p> Materiales: ${Manualidad.Materiales} </p>
+                    <p> Descripción: ${Manualidad.Descripcion} </p>
+                    <p> Fecha de Creación: ${Manualidad.FechaCreacion} </p>
+                    <button class="btn btn-outline-warning w-100 mb-2 botoneSinSesion Eliminar-Manualidad" data-id="${idDocumento}"> Eliminar </button>
+                    <button class="btn btn-outline-success w-100 mb-2 botoneSinSesion Actualizar-Manualidad" data-id="${idDocumento}" data-bs-toggle="modal" data-bs-target="#ActualizarManualidad"> Actualizar </button>
                 </li>
             `;
             html += li;
         });
-        RollsRoyces.innerHTML = html;
+        Manualidades.innerHTML = html;
 
-        const BotonesEliminar = RollsRoyces.querySelectorAll('.Eliminar-RollsRoyce');
+        const BotonesEliminar = Manualidades.querySelectorAll('.Eliminar-Manualidad');
 
-        // ELIMINAR ROLLS ROYCES
+        // ELIMINAR MANUALIDADES
         BotonesEliminar.forEach(BotonEliminarIndividual => {
             BotonEliminarIndividual.addEventListener('click', async (event) => {
                 const Documento = event.target.dataset.id;
                 try {
-                    await deleteDoc(doc(db, 'RollsRoyces', Documento));
+                    await deleteDoc(doc(db, 'Manualidades', Documento));
                     // Puedes agregar aquí algún código adicional después de eliminar el documento, si es necesario
                 } catch (error) {
-                    alert('Error al eliminar el Rolls Royce:', 'error');
+                    alert('Error al eliminar la manualidad:', 'error');
                 }
             });
         });
 
-        const BotonesActualizar = RollsRoyces.querySelectorAll('.Actualizar-RollsRoyce');
+        const BotonesActualizar = Manualidades.querySelectorAll('.Actualizar-Manualidad');
 
         BotonesActualizar.forEach(BotonActualizarIndividual => {
             BotonActualizarIndividual.addEventListener('click', async (e) => {
-                const identificadorDocumento = await obtenerRollsRoyce(e.target.dataset.id);
+                const identificadorDocumento = await obtenerManualidad(e.target.dataset.id);
 
                 // Accede a los datos del documento utilizando el método data()
                 const DATOSDOCUMENTO = identificadorDocumento.data();
 
                 // Ahora puedes acceder a las propiedades del documento
-                const MODELO = FormularioActualizarRollsRoyce['Actualizar-Modelo'];
-                const AÑO = FormularioActualizarRollsRoyce['Actualizar-Año'];
-                const COLOR = FormularioActualizarRollsRoyce['Actualizar-Color'];
-                const PRECIO = FormularioActualizarRollsRoyce['Actualizar-Precio'];
-                const FECHA_FABRICACION = FormularioActualizarRollsRoyce['Actualizar-FechaFabricacion'];
+                const NOMBRE = FormularioActualizarManualidad['Actualizar-Nombre'];
+                const TIPO = FormularioActualizarManualidad['Actualizar-Tipo'];
+                const MATERIALES = FormularioActualizarManualidad['Actualizar-Materiales'];
+                const DESCRIPCION = FormularioActualizarManualidad['Actualizar-Descripcion'];
+                const FECHA_CREACION = FormularioActualizarManualidad['Actualizar-FechaCreacion'];
 
-                MODELO.value = DATOSDOCUMENTO.Modelo;
-                AÑO.value = DATOSDOCUMENTO.Año;
-                COLOR.value = DATOSDOCUMENTO.Color;
-                PRECIO.value = DATOSDOCUMENTO.Precio;
-                FECHA_FABRICACION.value = DATOSDOCUMENTO.FechaFabricacion;
+                NOMBRE.value = DATOSDOCUMENTO.Nombre;
+                TIPO.value = DATOSDOCUMENTO.Tipo;
+                MATERIALES.value = DATOSDOCUMENTO.Materiales;
+                DESCRIPCION.value = DATOSDOCUMENTO.Descripcion;
+                FECHA_CREACION.value = DATOSDOCUMENTO.FechaCreacion;
 
                 id = identificadorDocumento.id;
             });
         });
 
-        // Evento para actualizar el Rolls Royce al enviar el formulario
-        FormularioActualizarRollsRoyce.addEventListener('submit', async (e) => {
+        // Evento para actualizar la manualidad al enviar el formulario
+        FormularioActualizarManualidad.addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
                 // Validar campos aquí si es necesario
-                const MODELO = FormularioActualizarRollsRoyce['Actualizar-Modelo'].value;
-                const AÑO = FormularioActualizarRollsRoyce['Actualizar-Año'].value;
-                const COLOR = FormularioActualizarRollsRoyce['Actualizar-Color'].value;
-                const PRECIO = FormularioActualizarRollsRoyce['Actualizar-Precio'].value;
-                const FECHA_FABRICACION = FormularioActualizarRollsRoyce['Actualizar-FechaFabricacion'].value;
+                const NOMBRE = FormularioActualizarManualidad['Actualizar-Nombre'].value;
+                const TIPO = FormularioActualizarManualidad['Actualizar-Tipo'].value;
+                const MATERIALES = FormularioActualizarManualidad['Actualizar-Materiales'].value;
+                const DESCRIPCION = FormularioActualizarManualidad['Actualizar-Descripcion'].value;
+                const FECHA_CREACION = FormularioActualizarManualidad['Actualizar-FechaCreacion'].value;
 
-                await actualizarRollsRoyce(id, {
-                    Modelo: MODELO,
-                    Año: AÑO,
-                    Color: COLOR,
-                    Precio: PRECIO,
-                    FechaFabricacion: FECHA_FABRICACION,
+                await actualizarManualidad(id, {
+                    Nombre: NOMBRE,
+                    Tipo: TIPO,
+                    Materiales: MATERIALES,
+                    Descripcion: DESCRIPCION,
+                    FechaCreacion: FECHA_CREACION,
                 });
 
                 // Cerrar el modal (si es un modal)
-                const actualizarModal = document.querySelector('#ActualizarRollsRoyce');
+                const actualizarModal = document.querySelector('#ActualizarManualidad');
                 const modal = bootstrap.Modal.getInstance(actualizarModal);
                 modal.hide();
             } catch (error) {
@@ -109,7 +109,7 @@ export const MostrarListaRollsRoyces = (Datos) => {
         });
 
     } else if (Datos.length === 0) {
-        RollsRoyces.innerHTML = `
+        Manualidades.innerHTML = `
             <h1>
                 Para visualizar el contenido es necesario que inicies sesión
                 <br><br>
