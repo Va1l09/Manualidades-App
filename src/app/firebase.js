@@ -10,12 +10,12 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDXgW2Q1dtRdhtRXkUnKFUKsdGWM1K3wYs",
-    authDomain: "rolls-royce-app-rm.firebaseapp.com",
-    projectId: "rolls-royce-app-rm",
-    storageBucket: "rolls-royce-app-rm.appspot.com",
-    messagingSenderId: "136951053066",
-    appId: "1:136951053066:web:def789a4422bce410e18f3"
+    apiKey: "AIzaSyAFot3f_rL8DcBToJjrh4hTUn83_6PMFoQ",
+    authDomain: "manualidades-app-mj.firebaseapp.com",
+    projectId: "manualidades-app-mj",
+    storageBucket: "manualidades-app-mj.appspot.com",
+    messagingSenderId: "439578296145",
+    appId: "1:439578296145:web:b974ff18a4891759d29d70"
 };
 
 // Initialize Firebase
